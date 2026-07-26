@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply font-body text-light-text dark:text-dark-text bg-light-bg dark:bg-dark-bg transition-colors duration-500;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "ss02";
+  }
+  ::selection {
+    @apply bg-light-accent/20 dark:bg-dark-accent/25 text-light-text dark:text-dark-text;
+  }
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-light-bg dark:bg-dark-bg;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-light-rule dark:bg-dark-rule;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-light-muted/40 dark:bg-dark-muted/40;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  /* ========== Swiss Design Grid ========== */
+  .swiss-grid {
+    background-image:
+      linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 64px 100%;
+  }
+  .dark .swiss-grid {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px);
+  }
+
+  /* ========== Section Header Kit ========== */
+  .sect-eyebrow {
+    @apply text-eyebrow uppercase font-mono font-medium text-light-accent dark:text-dark-accent flex items-center gap-4;
+  }
+  .sect-eyebrow::after {
+    content: '';
+    @apply flex-1 h-px bg-light-rule dark:bg-dark-rule;
+  }
+  .sect-eyebrow--no-line::after { display: none; }
+
+  .sect-title {
+    @apply font-heading text-heading-xl md:text-[2.75rem] text-light-text dark:text-dark-text leading-[1.05] tracking-[-0.02em];
+  }
+  .sect-title em,
+  .sect-title .italic {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* ========== Navigation ========== */
+  .nav-link-swiss {
+    @apply text-[0.72rem] tracking-[0.28em] uppercase font-medium text-light-muted dark:text-dark-muted relative transition-colors duration-300 hover:text-light-text dark:hover:text-dark-text;
+  }
+  .nav-link-swiss::after {
+    content: '';
+    @apply absolute -bottom-1.5 left-0 h-[1.5px] w-0 bg-light-text dark:bg-dark-text transition-all duration-500 ease-out;
+  }
+  .nav-link-swiss:hover::after {
+    @apply w-full;
+  }
+  .nav-link-swiss.active {
+    @apply text-light-text dark:text-dark-text;
+  }
+  .nav-link-swiss.active::after {
+    @apply w-full;
+  }
+
+  /* ========== Paper Card (no gradient, no rounded) ========== */
+  .paper-card {
+    @apply bg-light-card dark:bg-dark-card border border-light-border dark:border-dark-border relative transition-all duration-500;
+  }
+  .paper-card:hover {
+    @apply border-light-text/30 dark:border-dark-text/30 shadow-paper-sm -translate-y-0.5;
+  }
+  .paper-card::before {
+    content: '';
+    @apply absolute -z-10 inset-x-2 -bottom-2 h-3 bg-light-text/5 dark:bg-black/30 blur-md;
+  }
+
+  /* ========== Contact Tiles (grid line style) ========== */
+  .tile-border {
+    box-shadow:
+      inset 1px 0 0 var(--tile-line),
+      inset 0 1px 0 var(--tile-line);
+  }
+
+  /* ========== Buttons ========== */
+  .btn-accent {
+    @apply inline-flex items-center gap-3 px-7 py-3.5 text-[0.72rem] tracking-[0.28em] uppercase font-medium bg-light-text dark:bg-dark-text text-light-bg dark:text-dark-bg transition-all duration-500 relative overflow-hidden;
+  }
+  .btn-accent::after {
+    content: '';
+    @apply absolute inset-0 bg-light-accent dark:bg-dark-accent translate-x-[-102%] transition-transform duration-500 ease-out;
+  }
+  .btn-accent:hover::after {
+    @apply translate-x-0;
+  }
+  .btn-accent > * {
+    @apply relative z-10;
+  }
+  .btn-accent:hover {
+    @apply text-light-bg dark:text-dark-bg;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-3 px-7 py-3.5 text-[0.72rem] tracking-[0.28em] uppercase font-medium border border-light-text dark:border-dark-text text-light-text dark:text-dark-text transition-all duration-500 relative;
+  }
+  .btn-ghost:hover {
+    @apply bg-light-text text-light-bg dark:bg-dark-text dark:text-dark-bg;
+  }
+
+  /* ========== Category Pill / Tag ========== */
+  .pill-cat {
+    @apply text-[0.68rem] tracking-[0.25em] uppercase font-mono px-0 py-1 text-light-muted dark:text-dark-muted cursor-pointer transition-colors duration-300 relative;
+  }
+  .pill-cat.active {
+    @apply text-light-text dark:text-dark-text;
+  }
+  .pill-cat.active::before {
+    content: '→';
+    @apply mr-2 text-light-accent dark:text-dark-accent;
+  }
+  .pill-tag {
+    @apply inline-flex items-center text-[0.65rem] tracking-[0.2em] uppercase font-mono px-2.5 py-1 border border-light-rule dark:border-dark-rule text-light-muted dark:text-dark-muted;
+  }
+
+  /* ========== Dividers ========== */
+  .rule {
+    @apply h-px bg-light-rule dark:bg-dark-rule;
+  }
+  .rule-thick {
+    @apply h-[2px] bg-light-text dark:bg-dark-text;
+  }
+  .rule-accent {
+    @apply h-[1.5px] bg-light-accent dark:bg-dark-accent;
+  }
+
+  /* ========== Hero Section ========== */
+  .hero-display {
+    @apply font-heading font-normal leading-[0.9] tracking-[-0.04em] text-light-text dark:text-dark-text;
+  }
+  .hero-display.hero-name,
+  .hero-name {
+    font-size: clamp(2.4rem, 7vw, 6.3rem);
+  }
+  .hero-display em {
+    @apply text-light-accent dark:text-dark-accent font-normal;
+    font-family: var(--font-display);
+    font-style: italic;
+  }
+  .hero-meta-row {
+    @apply flex items-center justify-between text-[0.68rem] tracking-[0.28em] uppercase font-mono text-light-muted dark:text-dark-muted;
+  }
+
+  /* ========== Skill Row ========== */
+  .skill-row {
+    @apply grid grid-cols-12 gap-3 md:gap-6 items-center py-5 md:py-6 border-b border-light-rule dark:border-dark-rule transition-colors duration-500;
+  }
+  .skill-row:hover {
+    @apply bg-light-card/60 dark:bg-dark-card/60;
+  }
+  .skill-bar-track {
+    @apply relative h-[2px] bg-light-rule dark:bg-dark-rule overflow-hidden;
+  }
+  .skill-bar-fill {
+    @apply absolute left-0 top-0 bottom-0 bg-light-text dark:bg-dark-text;
+  }
+
+  /* ========== Project Row (Magazine List Style) ========== */
+  .project-row {
+    @apply grid grid-cols-12 gap-4 md:gap-6 items-stretch py-8 md:py-10 border-b border-light-rule dark:border-dark-rule transition-all duration-700 cursor-pointer relative;
+  }
+  .project-row::before {
+    content: '';
+    @apply absolute left-0 right-0 top-0 bottom-0 bg-light-text/[0.02] dark:bg-dark-text/[0.03] origin-left scale-x-0 transition-transform duration-700 ease-out;
+  }
+  .project-row:hover::before {
+    @apply scale-x-100;
+  }
+  .project-index {
+    @apply font-mono text-xs text-light-muted/50 dark:text-dark-muted/50 tabular-nums;
+  }
+
+  /* ========== Timeline ========== */
+  .t-line {
+    @apply absolute left-4 md:left-[11%] top-0 bottom-0 w-[1.5px] bg-light-rule dark:bg-dark-rule;
+  }
+  .t-dot {
+    @apply absolute left-4 md:left-[11%] -translate-x-1/2 w-3 h-3 rounded-full bg-light-bg dark:bg-dark-bg border-[1.5px] border-light-rule dark:border-dark-rule transition-colors duration-500;
+  }
+  .group:hover .t-dot {
+    @apply border-light-accent dark:border-dark-accent;
+  }
+  .t-card {
+    @apply relative ml-12 md:ml-0 md:col-start-3 md:col-span-8 py-5;
+  }
+
+  /* ========== Marquee / Ticker ========== */
+  .ticker {
+    @apply whitespace-nowrap flex overflow-hidden;
+  }
+  .ticker-track {
+    @apply flex shrink-0 animate-tick-scroll;
+  }
+  .ticker-item {
+    @apply px-8 text-[0.72rem] tracking-[0.3em] uppercase font-mono text-light-muted/70 dark:text-dark-muted/70 flex items-center gap-8;
+  }
+  .ticker-item::after {
+    content: '◆';
+    @apply text-[0.45rem] text-light-accent dark:text-dark-accent;
+  }
+
+  /* ========== Footnotes ========== */
+  .footnote {
+    @apply text-[0.7rem] tracking-[0.2em] uppercase font-mono text-light-muted/70 dark:text-dark-muted/70;
+  }
+
+  /* ========== Image placeholder frames ========== */
+  .img-frame {
+    @apply relative overflow-hidden bg-light-surface dark:bg-dark-surface border border-light-border dark:border-dark-border;
+  }
+  .img-frame .frame-mark {
+    @apply absolute top-3 left-3 text-[0.6rem] tracking-[0.3em] uppercase font-mono text-light-muted/40 dark:text-dark-muted/40 z-10;
+  }
+  .img-frame .frame-corner-tr,
+  .img-frame .frame-corner-bl {
+    @apply absolute w-4 h-4 border-light-rule dark:border-dark-rule z-10;
+  }
+  .img-frame .frame-corner-tr { @apply top-3 right-3 border-t border-r; }
+  .img-frame .frame-corner-bl { @apply bottom-3 left-3 border-b border-l; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .writing-vertical-rl {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  }
+  .bg-paper {
+    @apply bg-light-bg dark:bg-dark-bg bg-paper-grain dark:bg-paper-grain-dark;
+  }
+}

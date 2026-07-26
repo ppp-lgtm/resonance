@@ -1,0 +1,52 @@
+# ================================================
+# Resonance · EditorConfig
+# 统一不同 IDE / 编辑器的缩进、编码、行尾风格
+# 需要 IDE 安装 EditorConfig 插件（IntelliJ IDEA / VS Code 均自带）
+# ================================================
+
+root = true
+
+# ---------- 全局默认 ----------
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 120
+
+# ---------- Java：4 空格缩进 ----------
+[*.java]
+indent_size = 4
+
+# ---------- XML / POM：4 空格缩进 ----------
+[*.xml]
+indent_size = 4
+
+# ---------- SQL：4 空格缩进 ----------
+[*.sql]
+indent_size = 4
+
+# ---------- Properties ----------
+[*.properties]
+indent_style = space
+indent_size = 4
+
+# ---------- Markdown：保留尾随空格（用于换行语法）----------
+[*.md]
+trim_trailing_whitespace = false
+
+# ---------- Shell 脚本 ----------
+[*.sh]
+indent_size = 2
+
+# ---------- Windows 脚本 ----------
+[*.{bat,cmd,ps1}]
+end_of_line = crlf
+indent_size = 2
+
+# ---------- 锁文件：不允许手动改 ----------
+[{package-lock.json,yarn.lock,pnpm-lock.json}]
+indent_style = ignore
+max_line_length = off

@@ -1,0 +1,64 @@
+# === Maven ===
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# === IDE ===
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.project
+.classpath
+.settings/
+
+# === OS ===
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# === Java & Spring ===
+*.log
+logs/
+*.hprof
+*.jfr
+*.pid
+hs_err_pid*
+src/test/resources/test_containers/
+.out/
+
+# === Env & secrets ===
+.env
+.env.local
+application-local.yml
+*.override.yml
+*.override.properties
+
+# === Uploads & Data ===
+# 上传文件目录（本地存储，不进 Git；生产建议 MinIO/OSS）
+./uploads/
+./upload/
+/storage/
+/storage_data/
+
+# 本地嵌入式数据库（H2/SQLite 等）
+./data/
+*.db
+*.mv.db
+*.trace.db
+
+# === Node (若后续前端放进来) ===
+node_modules/
+dist/
+dist-ssr/
+*.local
+.vite/

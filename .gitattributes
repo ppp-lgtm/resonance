@@ -1,0 +1,78 @@
+# ================================================
+# Resonance · Git 属性配置
+# 统一跨平台（Windows/macOS/Linux）协作时的行尾符与文件处理
+# ================================================
+
+# ---------- 文本文件：统一转成 LF 行尾提交（检出时按系统自动转换）----------
+* text=auto eol=lf
+
+# ---------- 显式声明常见文本类型 ----------
+*.java      text eol=lf
+*.ts        text eol=lf
+*.tsx       text eol=lf
+*.js        text eol=lf
+*.jsx       text eol=lf
+*.vue       text eol=lf
+*.json      text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+*.xml       text eol=lf
+*.sql       text eol=lf
+*.md        text eol=lf
+*.html      text eol=lf
+*.css       text eol=lf
+*.scss      text eol=lf
+*.properties text eol=lf
+*.sh        text eol=lf
+*.bat       text eol=crlf
+*.cmd       text eol=crlf
+*.ps1       text eol=crlf
+
+# 编辑器配置与 Git 配置
+.gitignore  text eol=lf
+.gitattributes text eol=lf
+.editorconfig text eol=lf
+
+# ---------- 显式声明常见二进制类型（禁止行尾转换、禁止 diff）----------
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.gif       binary
+*.webp      binary
+*.bmp       binary
+*.ico       binary
+*.svg       binary
+
+*.pdf       binary
+*.doc       binary
+*.docx      binary
+*.xls       binary
+*.xlsx      binary
+*.ppt       binary
+*.pptx      binary
+
+*.jar       binary
+*.war       binary
+*.class     binary
+
+*.zip       binary
+*.7z        binary
+*.rar       binary
+*.tar       binary
+*.gz        binary
+
+*.woff      binary
+*.woff2     binary
+*.ttf       binary
+*.otf       binary
+*.eot       binary
+
+*.db        binary
+*.mv.db     binary
+*.trace.db  binary
+
+# ---------- GitHub 语言统计：排除第三方依赖、构建产物、文档翻译 ----------
+docs/**          linguist-documentation
+**/node_modules/** linguist-vendored
+**/target/**     linguist-generated
+**/dist/**       linguist-generated

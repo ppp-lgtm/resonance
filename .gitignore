@@ -1,0 +1,92 @@
+# ================================================
+# Resonance · 根目录 .gitignore
+# 三端各自还有子目录 .gitignore（api/ admin-web/ hr-web/）
+# 本文件主要负责项目级临时产物、打包文件、本地配置等
+# ================================================
+
+# ---------- 构建与打包产物 ----------
+# 根级打包脚本生成的临时目录与 zip
+src_pkg_tmp/
+共鸣_pkg/
+共鸣.zip
+源码.zip
+build_source_pkg.ps1
+*.zip
+
+# ---------- 本地数据库与上传文件 ----------
+# H2 / MySQL 本地数据文件（如有人把 data/ 放根目录）
+data/
+*.db
+*.mv.db
+*.trace.db
+
+# 上传的媒体文件（头像/简历/项目截图/证书）
+# 重要：生产环境上传目录务必放在项目外或走对象存储
+uploads/
+upload/
+files/
+storage/
+storage_data/
+
+# ---------- 日志与崩溃 dump ----------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.hprof
+*.jfr
+*.pid
+hs_err_pid*
+
+# ---------- 本地 IDE / 编辑器 ----------
+.idea/
+*.iml
+*.iws
+*.ipr
+.project
+.classpath
+.settings/
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Trae / Claude 本地设置（每个人不一样，不应该提交）
+.claude/
+.trae/
+
+# ---------- 操作系统 ----------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ---------- 环境变量与敏感配置 ----------
+# 实际使用的 .env 与覆盖配置一律不提交，用 .example 模板替代
+.env
+.env.local
+.env.*.local
+*.local
+
+# Spring Boot 本地覆盖配置（各子目录也会忽略，这里双保险）
+application-local.yml
+application-local.properties
+*-override.yml
+*-override.properties
+*.override.yml
+*.override.properties
+
+# ====== 安全强化：绝对禁止提交真实后端配置（内含 MySQL 密码/JWT 密钥）======
+**/application.yml
+!**/application.example.yml
+
+# ---------- 锁文件之外的临时缓存 ----------
+.cache/
+.temp/
+.tmp/
