@@ -26,8 +26,10 @@ onMounted(async () => {
       router.push('/register')
     }
   } catch {
-    // 接口不可用时默认走登录页
-    systemStatus.value = { hasAdmin: true, adminCount: 0 }
+    // 接口不可用时（后端未启动/405/反代配错等）→ 更安全地跳注册页
+    // 理由同 router/index.ts 守卫的 catch：管理员表为空时登录表单永远不可用，
+    // 但注册页自己会再查一次 status + 后端也会做注册时表非空校验，双保险不会重复建管理员
+    router.push('/register')
   } finally {
     loadingStatus.value = false
   }

@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -81,6 +82,23 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<R<Void>> handle404() {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(R.fail(ErrorCode.NOT_FOUND));
+    }
+
+    /* ================= 405 Method Not Allowed =================
+       部署时 Nginx「强制 HTTPS」用 301/302 跳转会让浏览器把 POST 变成 GET，
+       后端 @PostMapping 接口收到 GET → 抛 HttpRequestMethodNotSupportedException，
+       之前没这个 Handler，Spring 默认返回 HTML 错误页，而且默认 WARN 日志容易被过滤，
+       用户会看到「前端报错 405 但后端无任何日志」的诡异现象。现在统一抓出来 + ERROR 级 log。 */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<R<Void>> handle405(HttpRequestMethodNotSupportedException e) {
+        String msg = String.format("请求方法不匹配：实际 %s；%s",
+                e.getMethod(),
+                e.getSupportedHttpMethods() != null
+                        ? "后端支持 " + e.getSupportedHttpMethods()
+                        : "请检查该路径是否存在对应 Controller 映射");
+        log.error("[405 Method Not Allowed] {}", msg, e);
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(R.fail(ErrorCode.PARAM_INVALID.getCode(), msg));
     }
 
     /* ================= 文件上传超限 ================= */

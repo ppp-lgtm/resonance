@@ -71,7 +71,11 @@ router.beforeEach(async (to) => {
         return { name: 'register' }
       }
     } catch {
-      // 接口不可用，保持当前路由（登录页）
+      // 接口不可用时（后端未启动 / 反代配错 / 405 等）→ 更安全的兜底：跳注册页
+      // 为什么不留在登录页？—— 因为空数据库时登录永远失败，用户完全无法进入系统；
+      // 而注册页 onMounted 会再次独立调用 getStatus()，若后端已经有管理员会再跳回登录页，
+      // 同时后端 AuthService.register() 本身也校验了「管理员表为空才能注册」，不会重复创建
+      return { name: 'register' }
     }
   }
 
@@ -84,7 +88,8 @@ router.beforeEach(async (to) => {
         return { name: 'login' }
       }
     } catch {
-      // 接口不可用，保持当前路由（注册页）
+      // 接口不可用时保持当前路由（注册页）
+      // 不做跳转 — 注册页 onMounted 会再查一次，后端有管理员就会自己跳回登录页
     }
   }
 })

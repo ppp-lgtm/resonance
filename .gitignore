@@ -13,6 +13,12 @@ src_pkg_tmp/
 build_source_pkg.ps1
 *.zip
 
+# Maven / Spring Boot 打包出的 jar/war（三端 target/ 已由子目录忽略；这里兜底根目录 stray jar）
+*.jar
+*.war
+*.ear
+*.nar
+
 # ---------- 本地数据库与上传文件 ----------
 # H2 / MySQL 本地数据文件（如有人把 data/ 放根目录）
 data/

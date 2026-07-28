@@ -19,12 +19,16 @@ async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
     headers['Content-Type'] = 'application/json'
   }
   const res = await fetch(url, { ...init, headers })
+  // 关键：先把 body 当 text 读出来（流只读一次，避免 json→text 连续读造成 body stream already read）
+  // 后端返回的 HTML 错误页（404/405/502 时 Nginx/Spring 常吐 HTML）也能正确展示给用户看
+  const raw = await res.text()
   let json: ApiResult<T>
   try {
-    json = await res.json()
+    json = JSON.parse(raw) as ApiResult<T>
   } catch {
-    const text = await res.text()
-    throw new Error(`HTTP ${res.status} ${res.statusText}: ${text.slice(0, 300)}`)
+    // 不是 JSON：大概率是 Nginx 的 404/405/502 HTML，剥掉 HTML 标签截取前 300 字符方便定位
+    const snippet = raw.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 300)
+    throw new Error(`HTTP ${res.status} ${res.statusText}: ${snippet || '(empty body)'}`)
   }
   if (json.code !== 200 && json.code !== 0) {
     const err = new Error(`${json.message || '请求失败'}（code=${json.code}）`) as Error & { code?: number }
